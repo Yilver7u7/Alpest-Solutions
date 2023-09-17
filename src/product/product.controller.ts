@@ -11,12 +11,21 @@ export class ProductController {
     async createPost(@Res() res, @Body() createProductDTO: CreateProductDTO ){
         console.log(createProductDTO);
 
+        const product = await this.productService.createProduct(createProductDTO);
         return res.status(HttpStatus.OK).json({
-            message: 'The New Person Successfully Created'
+            message: 'The New Person Successfully Created',
+            product
         });
     }
 
-    
+    @Get('/')
+    async getProduct(@Res() res){
+        const product = await this.productService.getProducts()
+        return res.status(HttpStatus.OK).json({
+            message: 'The New Person Successfully Created',
+            product
+        });
+    }
 
     
 
