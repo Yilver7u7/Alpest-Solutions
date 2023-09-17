@@ -6,3 +6,4 @@ export class CreateProductDTO{
     readonly imageURL: string;
     readonly createdAt: Date;
 }
+
