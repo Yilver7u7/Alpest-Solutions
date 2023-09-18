@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 
@@ -36,9 +36,13 @@ export class ProductService {
     }
     
     async updateProduct(productID: string, createProductDTO: CreateProductDTO): Promise<Product> {
-        const updatedProduct = await this.productModel
-                            .findByIdAndUpdate(productID, createProductDTO, {new: true});
+        console.log('Aqui deberia estar el objeto, si tuviera uno! '+createProductDTO.name);
+        const updatedProduct = await this.productModel.findByIdAndUpdate(productID, { $set:createProductDTO }, {new: true});
+        if (!updatedProduct) {
+            throw new NotFoundException(`Product with ID ${productID} not found`);
+        }
         return updatedProduct;
     }
+    
 
 }
